@@ -11,7 +11,12 @@ from db import (
 )
 
 # Initialize DB
-init_db()
+# Initialize DB
+try:
+    init_db()
+except Exception as e:
+    st.error(f"❌ **Database Connection Failed!** \n\nError details: `{e}` \n\n**Check your Streamlit Secrets** and ensure the password is correct.")
+    st.stop()
 
 # --------- COMPATIBILITY LAYER ---------
 # Support both modern (1.30+) and legacy Streamlit
