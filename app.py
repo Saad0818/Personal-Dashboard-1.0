@@ -301,8 +301,8 @@ def get_data(db):
     academic_keywords = ['research', 'writing', 'paper', 'academic']
     entrepreneurial_keywords = ['algo', 'patent', 'trading', 'business', 'entrepreneurial']
     
-    academic_tasks = [t for t in tasks if (t.area or "").lower() in academic_keywords]
-    entrepreneurial_tasks = [t for t in tasks if (t.area or "").lower() in entrepreneurial_keywords]
+    academic_tasks = [t for t in tasks if (t.area or "").strip().lower() in academic_keywords]
+    entrepreneurial_tasks = [t for t in tasks if (t.area or "").strip().lower() in entrepreneurial_keywords]
 
     r_stats = calc_stats(academic_tasks)
     t_stats = calc_stats(entrepreneurial_tasks)
@@ -361,8 +361,8 @@ def get_data(db):
 def add_task_ui(db, area):
     with st.form(key=f"add_{area}", clear_on_submit=True):
         c1, c2 = st.columns([3,1])
-        title = c1.text_input("Task", label_visibility="collapsed", placeholder=f"New {area} task...")
-        prio = c2.selectbox("Prio", ["low","medium","high"], index=1, label_visibility="collapsed")
+        title = c1.text_input("Task", label_visibility="collapsed", placeholder=f"New {area} task...", key=f"input_title_{area}")
+        prio = c2.selectbox("Prio", ["low","medium","high"], index=1, label_visibility="collapsed", key=f"input_prio_{area}")
         if st.form_submit_button("Add"):
             if title:
                 db.add(Task(
