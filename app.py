@@ -298,8 +298,14 @@ def get_data(db):
         d = len([x for x in tl if x.status=='done'])
         return d/len(tl), d, len(tl)-d
 
-    r_stats = calc_stats(by_area['research'])
-    t_stats = calc_stats(by_area['trading'])
+    academic_keywords = ['research', 'writing', 'paper', 'academic']
+    entrepreneurial_keywords = ['algo', 'patent', 'trading', 'business', 'entrepreneurial']
+    
+    academic_tasks = [t for t in tasks if (t.area or "").lower() in academic_keywords]
+    entrepreneurial_tasks = [t for t in tasks if (t.area or "").lower() in entrepreneurial_keywords]
+
+    r_stats = calc_stats(academic_tasks)
+    t_stats = calc_stats(entrepreneurial_tasks)
     
     # Pending
     pending = [t for t in tasks if t.status in ['inbox','next','doing']]
@@ -394,7 +400,7 @@ def page_home():
             html_parts.append(f"""    <div style="position: relative; z-index: 1;">""")
             html_parts.append(f"""            <div style="font-size:0.85rem; font-weight:800; color:rgba(255,255,255,0.6); text-transform:uppercase; letter-spacing:0.12em; margin-bottom:0.5rem;">Next Milestone</div>""")
             html_parts.append(f"""            <div style="font-size:3.8rem; font-weight:800; color:#FFFFFF; line-height:1; letter-spacing:-0.04em; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));">""")
-            html_parts.append(f"""            {days}<span style="font-size:1.1rem; font-weight:700; color:rgba(255,255,255,0.6); margin-left:12px; vertical-align:middle;">DAYS LEFT</span>""")
+            html_parts.append(f"""            {days}<span style="font-size:1.1rem; font-weight:700; color:rgba(255,255,255,0.6); margin-left:12px; vertical-align:middle; letter-spacing:3px;">DAYS LEFT</span>""")
             html_parts.append(f"""        </div>""")
             html_parts.append(f"""            <div style="margin: 1.8rem 0; height: 8px; width: 100%; background: rgba(255,255,255,0.1); border-radius: 100px; overflow:hidden;">""")
             html_parts.append(f"""            <div style="height: 100%; width: {max(0, min(100, 100 - (days*5)))}%; background: #FFFFFF; border-radius: 100px; box-shadow: 0 0 20px rgba(255,255,255,0.3);"></div>""")
