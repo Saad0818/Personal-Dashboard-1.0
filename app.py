@@ -202,24 +202,24 @@ h1, h2, h3 {{
 ::-webkit-scrollbar-thumb {{ background: #E2E8F0; border-radius: 10px; }}
 
 /* Button Visibility Fix */
-.stButton > button {
+.stButton > button {{
     background-color: #0F172A !important;
     color: #FFFFFF !important;
     border: 1px solid #1E293B !important;
     border-radius: 8px !important;
     padding: 0.5rem 1rem !important;
     transition: all 0.2s;
-}
-.stButton > button:hover {
+}}
+.stButton > button:hover {{
     background-color: #334155 !important;
     color: #FFFFFF !important;
     border-color: #475569 !important;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-.stButton > button:active {
+}}
+.stButton > button:active {{
     background-color: #000000 !important;
     transform: translateY(1px);
-}
+}}
 </style>
 """
 st.markdown(GLOBAL_CSS, unsafe_allow_html=True)
