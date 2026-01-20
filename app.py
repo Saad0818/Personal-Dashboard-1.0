@@ -394,7 +394,7 @@ def page_home():
             html_parts.append(f"""    <div style="position: relative; z-index: 1;">""")
             html_parts.append(f"""            <div style="font-size:0.85rem; font-weight:800; color:rgba(255,255,255,0.6); text-transform:uppercase; letter-spacing:0.12em; margin-bottom:0.5rem;">Next Milestone</div>""")
             html_parts.append(f"""            <div style="font-size:3.8rem; font-weight:800; color:#FFFFFF; line-height:1; letter-spacing:-0.04em; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));">""")
-            html_parts.append(f"""            {days}<span style="font-size:1.1rem; font-weight:700; color:rgba(255,255,255,0.6); margin-left:10px; vertical-align:middle;">DAYS LEFT</span>""")
+            html_parts.append(f"""            {days}<span style="font-size:1.1rem; font-weight:700; color:rgba(255,255,255,0.6); margin-left:12px; vertical-align:middle;">DAYS LEFT</span>""")
             html_parts.append(f"""        </div>""")
             html_parts.append(f"""            <div style="margin: 1.8rem 0; height: 8px; width: 100%; background: rgba(255,255,255,0.1); border-radius: 100px; overflow:hidden;">""")
             html_parts.append(f"""            <div style="height: 100%; width: {max(0, min(100, 100 - (days*5)))}%; background: #FFFFFF; border-radius: 100px; box-shadow: 0 0 20px rgba(255,255,255,0.3);"></div>""")
@@ -507,7 +507,7 @@ def page_home():
         st.markdown(
             f"""
             <div style="background:{PURE_WHITE}; padding:1.5rem; border-radius:24px; text-align:center; margin-bottom:1.5rem; border:1px solid #E5E7EB; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
-                <div style="font-weight:700; color:{CHARCOAL}; margin-bottom:1.2rem; font-size:1rem; letter-spacing:0.02em;">Research</div>
+                <div style="font-weight:700; color:{CHARCOAL}; margin-bottom:1.2rem; font-size:1rem; letter-spacing:0.02em;">Academic</div>
                 <div style="
                     width:120px; height:120px; margin:0 auto; border-radius:50%;
                     background: conic-gradient({ACCENT_PRIMARY} 0% {int(rp*100)}%, #F1F5F9 0);
@@ -524,7 +524,7 @@ def page_home():
             </div>
             """, unsafe_allow_html=True
         )
-        with st.expander("Add Research Task"):
+        with st.expander("Add Academic Task"):
             add_task_ui(db, "research")
             
         # Trading
@@ -532,7 +532,7 @@ def page_home():
         st.markdown(
             f"""
             <div style="background:{PURE_WHITE}; padding:1.5rem; border-radius:24px; text-align:center; margin-bottom:1.5rem; margin-top:2rem; border:1px solid #E5E7EB; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
-                <div style="font-weight:700; color:{CHARCOAL}; margin-bottom:1.2rem; font-size:1rem; letter-spacing:0.02em;">Algo Trading</div>
+                <div style="font-weight:700; color:{CHARCOAL}; margin-bottom:1.2rem; font-size:1rem; letter-spacing:0.02em;">Entrepreneurial</div>
                 <div style="
                     width:120px; height:120px; margin:0 auto; border-radius:50%;
                     background: conic-gradient({ACCENT_SECONDARY} 0% {int(tp*100)}%, #F1F5F9 0);
@@ -548,7 +548,7 @@ def page_home():
             </div>
             """, unsafe_allow_html=True
         )
-        with st.expander("Add Trading Task"):
+        with st.expander("Add Entrepreneurial Task"):
             add_task_ui(db, "trading")
 
     # --- COLUMN 3: QUEUE ---
