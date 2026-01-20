@@ -202,7 +202,9 @@ h1, h2, h3 {{
 ::-webkit-scrollbar-thumb {{ background: #E2E8F0; border-radius: 10px; }}
 
 /* Button Visibility Fix */
-.stButton > button {{
+button, 
+.stButton > button, 
+[data-testid="stFormSubmitButton"] > button {{
     background-color: #0F172A !important;
     color: #FFFFFF !important;
     border: 1px solid #1E293B !important;
@@ -210,15 +212,26 @@ h1, h2, h3 {{
     padding: 0.5rem 1rem !important;
     transition: all 0.2s;
 }}
-.stButton > button:hover {{
+button:hover, 
+.stButton > button:hover, 
+[data-testid="stFormSubmitButton"] > button:hover {{
     background-color: #334155 !important;
     color: #FFFFFF !important;
     border-color: #475569 !important;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }}
-.stButton > button:active {{
+button:active, 
+.stButton > button:active, 
+[data-testid="stFormSubmitButton"] > button:active {{
     background-color: #000000 !important;
     transform: translateY(1px);
+}}
+
+/* Ensure text inside button is also white (sometimes streamlit uses p tags inside) */
+button p, 
+.stButton > button p,
+[data-testid="stFormSubmitButton"] > button p {{
+    color: #FFFFFF !important;
 }}
 </style>
 """
