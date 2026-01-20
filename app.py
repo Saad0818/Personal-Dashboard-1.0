@@ -200,6 +200,26 @@ h1, h2, h3 {{
 ::-webkit-scrollbar {{ width: 8px; }}
 ::-webkit-scrollbar-track {{ background: transparent; }}
 ::-webkit-scrollbar-thumb {{ background: #E2E8F0; border-radius: 10px; }}
+
+/* Button Visibility Fix */
+.stButton > button {
+    background-color: #0F172A !important;
+    color: #FFFFFF !important;
+    border: 1px solid #1E293B !important;
+    border-radius: 8px !important;
+    padding: 0.5rem 1rem !important;
+    transition: all 0.2s;
+}
+.stButton > button:hover {
+    background-color: #334155 !important;
+    color: #FFFFFF !important;
+    border-color: #475569 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+.stButton > button:active {
+    background-color: #000000 !important;
+    transform: translateY(1px);
+}
 </style>
 """
 st.markdown(GLOBAL_CSS, unsafe_allow_html=True)
@@ -218,9 +238,9 @@ def render_nav_bar():
             proj = None
         if proj:
             area = (proj.area or "").lower()
-            if area in ["research", "writing", "paper"]:
+            if area in ["research", "writing", "paper", "academic"]:
                 current_page = "research"
-            elif area in ["trading", "algo", "patent", "business"]:
+            elif area in ["trading", "algo", "patent", "business", "entrepreneurial"]:
                 current_page = "business"
             else:
                 current_page = "home"
@@ -303,18 +323,18 @@ def get_data(db):
     # Projects
     projects = db.query(Project).all()
     
-    # Categorize Projects (not tasks)
-    papers_proj = [p for p in projects if (p.area or '').lower() == 'paper']
-    algos_proj = [p for p in projects if (p.area or '').lower() == 'algo']
-    patents_proj = [p for p in projects if (p.area or '').lower() == 'patent']
+    # Categorize Projects (Unified)
+    academic_proj = [p for p in projects if (p.area or '').lower() in ['paper', 'research', 'writing', 'academic']]
+    entrepreneurial_proj = [p for p in projects if (p.area or '').lower() in ['algo', 'patent', 'trading', 'business', 'entrepreneurial']]
+    misc_proj = [p for p in projects if (p.area or '').lower() in ['miscellaneous', 'misc', 'other']]
 
     return {
         'research': r_stats,
         'trading': t_stats,
         'pending': pending[:6],
-        'papers': papers_proj,
-        'algos': algos_proj,
-        'patents': patents_proj,
+        'academic': academic_proj,
+        'entrepreneurial': entrepreneurial_proj,
+        'miscellaneous': misc_proj,
         'milestone': milestone,
         'history_df': history_df
     }
@@ -552,16 +572,16 @@ def page_home():
                     set_query_param("project_id", str(p.id))
                     app_rerun()
 
-        render_project_group("Papers", data['papers'], "📚")
-        render_project_group("Algorithms", data['algos'], "⚡")
-        render_project_group("Patents", data['patents'], "🛡️")
+        render_project_group("Academic", data['academic'], "📚")
+        render_project_group("Entrepreneurial", data['entrepreneurial'], "🚀")
+        render_project_group("Miscellaneous", data['miscellaneous'], "�")
 
         st.markdown("---")
         with st.expander("➕ New Project"):
             with st.form("new_project_form"):
                 p_name = st.text_input("Project Name")
                 p_desc = st.text_area("Description")
-                p_area = st.selectbox("Category", ["paper", "algo", "patent", "research", "trading"])
+                p_area = st.selectbox("Category", ["Academic", "Entrepreneurial", "Miscellaneous"])
                 if st.form_submit_button("Create Project"):
                     if p_name:
                         db = next(get_db())
@@ -689,8 +709,8 @@ def page_research_hub():
     st.markdown("<br><br>", unsafe_allow_html=True)
     st.markdown("## 🧪 Research Hub")
     db = next(get_db())
-    # Unified with 'paper', 'research', and 'writing'
-    projects = db.query(Project).filter(Project.area.in_(["research", "writing", "paper"])).all()
+    # Unified with 'paper', 'research', and 'writing' and 'Academic'
+    projects = db.query(Project).filter(Project.area.in_(["research", "writing", "paper", "Academic"])).all()
     
     if not projects:
         st.info("No research or paper projects found.")
@@ -724,7 +744,7 @@ def page_business_hub():
     st.markdown("## 💼 Business Hub")
     db = next(get_db())
     # Projects for financial gain (trading, algorithms, etc.)
-    projects = db.query(Project).filter(Project.area.in_(["trading", "algo", "patent"])).all()
+    projects = db.query(Project).filter(Project.area.in_(["trading", "algo", "patent", "Entrepreneurial"])).all()
     
     if not projects:
         st.info("No business projects found.")
