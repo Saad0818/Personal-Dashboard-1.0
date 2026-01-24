@@ -380,8 +380,27 @@ def page_home():
     
     # Header
     c_head, c_date = st.columns([3, 1])
-    c_head.markdown(f"## Mission Control")
-    c_date.markdown(f"<div style='text-align:right; color:{SLATE}; font-weight:600;'>{datetime.now().strftime('%A, %B %d')}</div>", unsafe_allow_html=True)
+    
+    # Quick Links
+    qc_url = "https://www.quantconnect.com/terminal/"
+    notion_url = "https://www.notion.so/Home-8e30b7065493411b8792ba42f5f89188"
+    
+    header_html = f"""
+    <div style="display: flex; align-items: center; gap: 20px;">
+        <h2 style="margin: 0; padding: 0; line-height: 1.2;">Mission Control</h2>
+        <div style="display: flex; gap: 8px; margin-top: 4px;">
+            <a href="{qc_url}" target="_blank" style="text-decoration:none; background:#F1F5F9; padding:6px 12px; border-radius:8px; font-size:0.8rem; font-weight:600; color:{CHARCOAL}; display:flex; align-items:center; gap:6px; transition: all 0.2s; border:1px solid #E2E8F0;" onMouseOver="this.style.borderColor='#94A3B8'; this.style.transform='translateY(-1px)';" onMouseOut="this.style.borderColor='#E2E8F0'; this.style.transform='translateY(0)';">
+                <span style="font-size: 1rem;">📈</span> QT
+            </a>
+            <a href="{notion_url}" target="_blank" style="text-decoration:none; background:#F1F5F9; padding:6px 12px; border-radius:8px; font-size:0.8rem; font-weight:600; color:{CHARCOAL}; display:flex; align-items:center; gap:6px; transition: all 0.2s; border:1px solid #E2E8F0;" onMouseOver="this.style.borderColor='#94A3B8'; this.style.transform='translateY(-1px)';" onMouseOut="this.style.borderColor='#E2E8F0'; this.style.transform='translateY(0)';">
+                <span style="font-size: 1rem;">📓</span> Notion
+            </a>
+        </div>
+    </div>
+    """
+    
+    c_head.markdown(header_html, unsafe_allow_html=True)
+    c_date.markdown(f"<div style='text-align:right; color:{SLATE}; font-weight:600; padding-top: 10px;'>{datetime.now().strftime('%A, %B %d')}</div>", unsafe_allow_html=True)
     
     st.markdown("<br>", unsafe_allow_html=True)
 
